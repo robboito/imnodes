@@ -1,45 +1,43 @@
+#include "imgui.h"
+#include "imnodes.h"
 #include "node_editor.h"
-#include <imnodes.h>
-#include <imgui.h>
 
-namespace example
-{
-namespace
-{
-class HelloWorldNodeEditor
-{
+namespace example {
+namespace {
+class HelloWorldNodeEditor {
 public:
-    void show()
-    {
-        ImGui::Begin("simple node editor");
+  void show() {
+    ImGui::Begin("simple node editor");
 
-        ImNodes::BeginNodeEditor();
-        ImNodes::BeginNode(1);
+    ImNodes::BeginNodeEditor();
+    ImNodes::BeginNode(1);
 
-        ImNodes::BeginNodeTitleBar();
-        ImGui::TextUnformatted("simple node :)");
-        ImNodes::EndNodeTitleBar();
+    ImNodes::BeginNodeTitleBar();
+    ImGui::TextUnformatted("simple node :)");
+    ImNodes::EndNodeTitleBar();
 
-        ImNodes::BeginInputAttribute(2);
-        ImGui::Text("input");
-        ImNodes::EndInputAttribute();
+    ImNodes::BeginInputAttribute(2);
+    ImGui::Text("input");
+    ImNodes::EndInputAttribute();
 
-        ImNodes::BeginOutputAttribute(3);
-        ImGui::Indent(40);
-        ImGui::Text("output");
-        ImNodes::EndOutputAttribute();
+    ImNodes::BeginOutputAttribute(3);
+    ImGui::Indent(40);
+    ImGui::Text("output");
+    ImNodes::EndOutputAttribute();
 
-        ImNodes::EndNode();
-        ImNodes::EndNodeEditor();
+    ImNodes::EndNode();
+    ImNodes::EndNodeEditor();
 
-        ImGui::End();
-    }
+    ImGui::End();
+  }
 };
 
 static HelloWorldNodeEditor editor;
 } // namespace
 
-void NodeEditorInitialize() { ImNodes::SetNodeGridSpacePos(1, ImVec2(200.0f, 200.0f)); }
+void NodeEditorInitialize() {
+  ImNodes::SetNodeGridSpacePos(1, ImVec2(200.0f, 200.0f));
+}
 
 void NodeEditorShow() { editor.show(); }
 

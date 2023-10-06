@@ -1,7 +1,6 @@
 #pragma once
 
-namespace example
-{
+namespace example {
 void NodeEditorInitialize();
 void NodeEditorShow();
 void NodeEditorShutdown();

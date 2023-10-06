@@ -4,6 +4,7 @@
 #include "imgui.h"
 #include "imnodes.h"
 
+#include <GLFW/glfw3.h>
 #include <algorithm>
 #include <cassert>
 #include <chrono>
@@ -103,7 +104,7 @@ public:
 
   void Show() {
     // Update timer context
-    current_time_seconds = 0.001f * 10; // SDL_GetTicks();
+    current_time_seconds = static_cast<float>(glfwGetTime()); // SDL_GetTicks();
 
     auto flags = ImGuiWindowFlags_MenuBar;
 

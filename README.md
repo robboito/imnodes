@@ -16,6 +16,14 @@ Features:
 - Nest ImGui widgets inside nodes
 - Simple distribution, just copy-paste `imnodes.h`, `imnodes_internal.h`, and `imnodes.cpp` into your project along side ImGui.
 
+## Developing
+
+This repo makes use of [Hedron Vision's Compile Commands Extractor](https://github.com/hedronvision/bazel-compile-commands-extractor) to create a `compile_commands.json`. This can be triggered with the following:
+
+```bash
+$ bazel run @hedron_compile_commands//:refresh_all
+```
+
 ## Examples
 
 This repository includes a few example files, under `example/`. They are intended as simple examples giving you an idea of what you can build with imnodes.
@@ -265,5 +273,9 @@ namespace py = pybind11;
 See the `examples/` directory to see library usage in greater detail.
 
 - simple.cpp is a simple hello-world style program which displays two nodes
-- save_load.cpp is enables you to add and remove nodes and links, and serializes/deserializes them, so that the program state is retained between restarting the program
+- save_load.cpp enables you to add and remove nodes and links, and serializes/deserializes them, so that the program state is retained between restarting the program
 - color_node_editor.cpp is a more complete example, which shows how a simple node editor is implemented with a graph.
+
+## TODO
+
+- Support other platforms other than MacOS

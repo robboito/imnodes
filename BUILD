@@ -9,7 +9,7 @@ cc_library(
         "-Werror",
         "-Wall",
     ],
-    # defines = ["IMGUI_DEFINE_MATH_OPERATORS"],
+    local_defines = ["IMGUI_DEFINE_MATH_OPERATORS"],
     visibility = ["//visibility:private"],
     deps = [
         "@com_glfw_glfw//:glfw_main",

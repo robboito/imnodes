@@ -10,7 +10,7 @@ cc_library(
         "-Wall",
     ],
     local_defines = ["IMGUI_DEFINE_MATH_OPERATORS"],
-    visibility = ["//visibility:private"],
+    visibility = ["//visibility:public"],
     deps = [
         "@com_glfw_glfw//:glfw_main",
         "@com_ocornut_imgui//:imgui_main",

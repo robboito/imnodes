@@ -1,5 +1,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "objc_library")
 
+# Currently only working on MacOS
+
 objc_library(
     name = "glfw_objc",
     srcs = [

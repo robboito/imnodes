@@ -1,12 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
-platform(
-    name = "macos_arm64",
-    constraint_values = [
-        "@platforms//os:macos",
-        "@platforms//cpu:arm64",
-    ],
-)
+# Currently only working on MacOS
 
 cc_library(
     name = "imgui_glfw",
@@ -36,9 +30,6 @@ cc_library(
     hdrs = glob([
         "*.h",
     ]),
-    defines = [
-        # "GL_SILENCE_DEPRECATION",
-    ],
     visibility = ["//visibility:public"],
     deps = [
         "@com_ocornut_imgui//:imgui_glfw",

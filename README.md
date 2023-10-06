@@ -12,22 +12,25 @@ Imnodes aims to provide a simple, immediate-mode interface for creating a node e
 
 Features:
 
-* Create nodes, links, and pins in an immediate-mode style. The user controls all the state.
-* Nest ImGui widgets inside nodes
-* Simple distribution, just copy-paste `imnodes.h`, `imnodes_internal.h`, and `imnodes.cpp` into your project along side ImGui.
+- Create nodes, links, and pins in an immediate-mode style. The user controls all the state.
+- Nest ImGui widgets inside nodes
+- Simple distribution, just copy-paste `imnodes.h`, `imnodes_internal.h`, and `imnodes.cpp` into your project along side ImGui.
 
 ## Examples
 
 This repository includes a few example files, under `example/`. They are intended as simple examples giving you an idea of what you can build with imnodes.
 
-If you need to build the examples, you can use the provided CMake script to do so.
+If you need to build the examples, you can use the provided Bazel build files to do so.
 
 ```bash
-# Initialize the vcpkg submodule
-$ git submodule update --init
-# Run the generation step and build
-$ cmake -B build-release/ -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
-$ cmake --build build-release -- -j
+# To build the base library
+$ bazel build //:imnodes
+
+# Each example can be built with Bazel
+$ bazel run //example:hello
+$ bazel run //example:save_load
+$ bazel run //example:multi_editor
+$ bazel run //example:color_node_editor
 ```
 
 Note that this has not been tested on Linux and is likely to fail on the platform.
@@ -206,6 +209,7 @@ ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_TopRight);
 ```
 
 The mini-map also supports limited node hovering customization through a user-defined callback.
+
 ```cpp
 // User callback
 void mini_map_node_hovering_callback(int node_id, void* user_data)
@@ -226,6 +230,7 @@ ImNodes can be customized by providing an `imnodes_config.h` header and specifyi
 It is currently possible to override the type of the minimap hovering callback function. This is useful when generating bindings for another language.
 
 Here's an example imnodes_config.h, which generates a pybind wrapper for the callback.
+
 ```cpp
 #pragma once
 
@@ -253,12 +258,12 @@ namespace py = pybind11;
 
 ## Known issues
 
-* `ImGui::Separator()` spans the current window span. As a result, using a separator inside a node will result in the separator spilling out of the node into the node editor grid.
+- `ImGui::Separator()` spans the current window span. As a result, using a separator inside a node will result in the separator spilling out of the node into the node editor grid.
 
 ## Further information
 
 See the `examples/` directory to see library usage in greater detail.
 
-* simple.cpp is a simple hello-world style program which displays two nodes
-* save_load.cpp is enables you to add and remove nodes and links, and serializes/deserializes them, so that the program state is retained between restarting the program
-* color_node_editor.cpp is a more complete example, which shows how a simple node editor is implemented with a graph.
+- simple.cpp is a simple hello-world style program which displays two nodes
+- save_load.cpp is enables you to add and remove nodes and links, and serializes/deserializes them, so that the program state is retained between restarting the program
+- color_node_editor.cpp is a more complete example, which shows how a simple node editor is implemented with a graph.

@@ -1,6 +1,7 @@
-#include "imgui.h"
-#include "imnodes.h"
-#include "node_editor.h"
+#include <imgui/imgui.h>
+#include <imnodes/imnodes.h>
+
+#include "./node_editor.h"
 
 #include <algorithm>
 #include <vector>

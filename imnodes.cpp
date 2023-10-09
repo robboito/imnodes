@@ -6,10 +6,10 @@
 // [SECTION] render helpers
 // [SECTION] API implementation
 
-#include "imnodes.h"
-#include "imnodes_internal.h"
+#include "./imnodes.h"
+#include "./imnodes_internal.h"
 
-#include "imgui_internal.h"
+#include <imgui/imgui_internal.h>
 
 // Check minimum ImGui version
 #define MINIMUM_COMPATIBLE_IMGUI_VERSION 17400

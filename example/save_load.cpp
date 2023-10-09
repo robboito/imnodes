@@ -1,13 +1,13 @@
-#include "node_editor.h"
+#include "./node_editor.h"
 
-#include "imgui.h"
-#include "imnodes.h"
+#include <imgui/imgui.h>
+#include <imnodes/imnodes.h>
 
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <fstream>
-#include <ios> // for std::streamsize
+#include <ios>
 #include <vector>
 
 namespace example {

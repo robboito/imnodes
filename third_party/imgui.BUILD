@@ -15,6 +15,7 @@ cc_library(
     ] + glob([
         "*.h",
     ]),
+    include_prefix = "imgui",
     linkopts = ["-framework OpenGL"],
     visibility = ["//visibility:private"],
     deps = [
@@ -30,6 +31,7 @@ cc_library(
     hdrs = glob([
         "*.h",
     ]),
+    include_prefix = "imgui",
     visibility = ["//visibility:public"],
     deps = [
         "@com_ocornut_imgui//:imgui_glfw",

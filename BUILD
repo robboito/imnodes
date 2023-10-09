@@ -11,6 +11,7 @@ cc_library(
         "-Wextra",
         "-Wpedantic",
     ],
+    include_prefix = "imnodes",
     local_defines = ["IMGUI_DEFINE_MATH_OPERATORS"],
     visibility = ["//visibility:public"],
     deps = [

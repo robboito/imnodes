@@ -1,10 +1,10 @@
-#include "graph.h"
-#include "node_editor.h"
-
-#include "imgui.h"
-#include "imnodes.h"
+#include "./graph.h"
+#include "./node_editor.h"
 
 #include <GLFW/glfw3.h>
+#include <imgui/imgui.h>
+#include <imnodes/imnodes.h>
+
 #include <algorithm>
 #include <cassert>
 #include <chrono>

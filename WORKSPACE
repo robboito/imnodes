@@ -29,6 +29,7 @@ http_archive(
 http_archive(
     name = "com_ocornut_imgui",
     build_file = "@//third_party:imgui.BUILD",
+    sha256 = "d6b21b8a16bd2e03a88ada3f0a2c39fd6a36d14cf4973f4e744ecda7122b5f06",
     strip_prefix = "imgui-1.89.9-docking",
     urls = ["https://github.com/ocornut/imgui/archive/refs/tags/v1.89.9-docking.zip"],
 )

@@ -245,9 +245,8 @@ int Graph<NodeType>::insert_node(const NodeType &node) {
 }
 
 template <typename NodeType> void Graph<NodeType>::erase_node(const int id) {
-
-  // first, remove any potential dangling edges
   {
+    // first, remove any potential dangling edges
     static std::vector<int> edges_to_erase;
 
     for (const Edge &edge : edges_.elements()) {

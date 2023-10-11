@@ -1,15 +1,15 @@
-#include "GLFW/glfw3.h"
-#include "imgui/backends/imgui_impl_glfw.h"
-#include "imgui/backends/imgui_impl_opengl3.h"
-#include "imgui/imgui.h"
-
-#include "imnodes/imnodes.h"
-#include "node_editor.h"
-
 #include <cstdio>
 #include <cstdlib>
 #include <functional>
 #include <iostream>
+
+#include <GLFW/glfw3.h>
+#include <imgui/backends/imgui_impl_glfw.h>
+#include <imgui/backends/imgui_impl_opengl3.h>
+#include <imgui/imgui.h>
+#include <imnodes/imnodes.h>
+
+#include "./node_editor.h"
 
 static inline void ErrorCallback(int error, const char *description) {
   fprintf(stderr, "Glfw Error %d: %s\n", error, description);

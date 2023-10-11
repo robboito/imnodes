@@ -1,15 +1,15 @@
-#include "./graph.h"
-#include "./node_editor.h"
-
-#include <GLFW/glfw3.h>
-#include <imgui/imgui.h>
-#include <imnodes/imnodes.h>
-
 #include <algorithm>
 #include <cassert>
 #include <chrono>
 #include <cmath>
 #include <vector>
+
+#include <GLFW/glfw3.h>
+#include <imgui/imgui.h>
+#include <imnodes/imnodes.h>
+
+#include "./graph.h"
+#include "./node_editor.h"
 
 namespace example {
 namespace {

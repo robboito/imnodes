@@ -1,14 +1,14 @@
-#include "./node_editor.h"
-
-#include <imgui/imgui.h>
-#include <imnodes/imnodes.h>
-
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <fstream>
 #include <ios>
 #include <vector>
+
+#include <imgui/imgui.h>
+#include <imnodes/imnodes.h>
+
+#include "./node_editor.h"
 
 namespace example {
 namespace {

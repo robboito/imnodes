@@ -1,10 +1,10 @@
+#include <algorithm>
+#include <vector>
+
 #include <imgui/imgui.h>
 #include <imnodes/imnodes.h>
 
 #include "./node_editor.h"
-
-#include <algorithm>
-#include <vector>
 
 namespace example {
 namespace {

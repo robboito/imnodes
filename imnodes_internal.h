@@ -1,11 +1,10 @@
 #pragma once
-
-#include "./imnodes.h"
+#include <climits>
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
 
-#include <limits.h>
+#include "./imnodes.h"
 
 // the structure of this file:
 //

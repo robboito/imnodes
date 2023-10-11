@@ -5,9 +5,13 @@
 // [SECTION] ui state logic
 // [SECTION] render helpers
 // [SECTION] API implementation
-
-#include "./imnodes.h"
-#include "./imnodes_internal.h"
+#include <climits>
+#include <cmath>
+#include <cstdint>
+#include <cstdio> // for fwrite, ssprintf, sscanf
+#include <cstdlib>
+#include <cstring> // strlen, strncmp
+#include <new>
 
 #include <imgui/imgui_internal.h>
 
@@ -18,13 +22,8 @@
     "Minimum ImGui version requirement not met -- please use a newer version!"
 #endif
 
-#include <limits.h>
-#include <math.h>
-#include <new>
-#include <stdint.h>
-#include <stdio.h> // for fwrite, ssprintf, sscanf
-#include <stdlib.h>
-#include <string.h> // strlen, strncmp
+#include "./imnodes.h"
+#include "./imnodes_internal.h"
 
 // Use secure CRT function variants to avoid MSVC compiler errors
 #ifdef _MSC_VER
@@ -62,7 +61,7 @@ ImVec2 GetClosestPointOnCubicBezier(const int num_segments, const ImVec2 &p,
   ImVec2 p_last = cb.P0;
   ImVec2 p_closest;
   float p_closest_dist = FLT_MAX;
-  float t_step = 1.0f / (float)num_segments;
+  float t_step = 1.0f / static_cast<float>(num_segments);
   for (int i = 1; i <= num_segments; ++i) {
     ImVec2 p_current = EvalCubicBezier(t_step * i, cb.P0, cb.P1, cb.P2, cb.P3);
     ImVec2 p_line = ImLineClosestPoint(p_last, p_current, p);
@@ -127,7 +126,9 @@ inline float EvalImplicitLineEq(const ImVec2 &p1, const ImVec2 &p2,
          (p2.x * p1.y - p1.x * p2.y);
 }
 
-inline int Sign(float val) { return int(val > 0.0f) - int(val < 0.0f); }
+inline int Sign(float val) {
+  return static_cast<int>(val > 0.0f) - static_cast<int>(val < 0.0f);
+}
 
 inline bool RectangleOverlapsLineSegment(const ImRect &rect, const ImVec2 &p1,
                                          const ImVec2 &p2) {
@@ -311,9 +312,7 @@ void ImDrawListGrowChannels(ImDrawList *draw_list, const int num_channels) {
     if (i < old_channel_capacity) {
       channel._CmdBuffer.resize(0);
       channel._IdxBuffer.resize(0);
-    }
-    // Else, we need to construct new draw channels.
-    else {
+    } else { // Else, we need to construct new draw channels.
       IM_PLACEMENT_NEW(&channel) ImDrawChannel();
     }
 
@@ -553,9 +552,8 @@ void BeginNodeSelection(ImNodesEditorContext &editor, const int node_idx) {
     IM_ASSERT(elem != depth_stack.end());
     depth_stack.erase(elem);
     depth_stack.push_back(node_idx);
-  }
-  // Deselect a previously-selected node
-  else if (GImNodes->MultipleSelectModifier) {
+  } else if (GImNodes->MultipleSelectModifier) { // Deselect a
+                                                 // previously-selected node
     const int *const node_ptr = editor.SelectedNodeIndices.find(node_idx);
     editor.SelectedNodeIndices.erase(node_ptr);
 
@@ -1815,7 +1813,7 @@ void SetCurrentContext(ImNodesContext *ctx) { GImNodes = ctx; }
 ImNodesEditorContext *EditorContextCreate() {
   void *mem = ImGui::MemAlloc(sizeof(ImNodesEditorContext));
   new (mem) ImNodesEditorContext();
-  return (ImNodesEditorContext *)mem;
+  return reinterpret_cast<ImNodesEditorContext *>(mem);
 }
 
 void EditorContextFree(ImNodesEditorContext *ctx) {
@@ -2141,20 +2139,15 @@ void EndNodeEditor() {
     if (GImNodes->LeftMouseClicked && GImNodes->HoveredLinkIdx.HasValue()) {
       BeginLinkInteraction(editor, GImNodes->HoveredLinkIdx.Value(),
                            GImNodes->HoveredPinIdx);
-    }
-
-    else if (GImNodes->LeftMouseClicked && GImNodes->HoveredPinIdx.HasValue()) {
+    } else if (GImNodes->LeftMouseClicked &&
+               GImNodes->HoveredPinIdx.HasValue()) {
       BeginLinkCreation(editor, GImNodes->HoveredPinIdx.Value());
-    }
-
-    else if (GImNodes->LeftMouseClicked &&
-             GImNodes->HoveredNodeIdx.HasValue()) {
+    } else if (GImNodes->LeftMouseClicked &&
+               GImNodes->HoveredNodeIdx.HasValue()) {
       BeginNodeSelection(editor, GImNodes->HoveredNodeIdx.Value());
-    }
-
-    else if (GImNodes->LeftMouseClicked || GImNodes->LeftMouseReleased ||
-             GImNodes->AltMouseClicked ||
-             GImNodes->AltMouseScrollDelta != 0.f) {
+    } else if (GImNodes->LeftMouseClicked || GImNodes->LeftMouseReleased ||
+               GImNodes->AltMouseClicked ||
+               GImNodes->AltMouseScrollDelta != 0.f) {
       BeginCanvasInteraction(editor);
     }
 
@@ -2412,7 +2405,8 @@ struct ImNodesStyleVarInfo {
   ImU32 Count;
   ImU32 Offset;
   void *GetVarPtr(ImNodesStyle *style) const {
-    return (void *)((unsigned char *)style + Offset);
+    return reinterpret_cast<void *>(reinterpret_cast<unsigned char *>(style) +
+                                    Offset);
   }
 };
 
@@ -2465,7 +2459,8 @@ static const ImNodesStyleVarInfo *GetStyleVarInfo(ImNodesStyleVar idx) {
 void PushStyleVar(const ImNodesStyleVar item, const float value) {
   const ImNodesStyleVarInfo *var_info = GetStyleVarInfo(item);
   if (var_info->Type == ImGuiDataType_Float && var_info->Count == 1) {
-    float &style_var = *(float *)var_info->GetVarPtr(&GImNodes->Style);
+    float &style_var =
+        *reinterpret_cast<float *>(var_info->GetVarPtr(&GImNodes->Style));
     GImNodes->StyleModifierStack.push_back(
         ImNodesStyleVarElement(item, style_var));
     style_var = value;
@@ -2478,7 +2473,8 @@ void PushStyleVar(const ImNodesStyleVar item, const float value) {
 void PushStyleVar(const ImNodesStyleVar item, const ImVec2 &value) {
   const ImNodesStyleVarInfo *var_info = GetStyleVarInfo(item);
   if (var_info->Type == ImGuiDataType_Float && var_info->Count == 2) {
-    ImVec2 &style_var = *(ImVec2 *)var_info->GetVarPtr(&GImNodes->Style);
+    ImVec2 &style_var =
+        *reinterpret_cast<ImVec2 *>(var_info->GetVarPtr(&GImNodes->Style));
     GImNodes->StyleModifierStack.push_back(
         ImNodesStyleVarElement(item, style_var));
     style_var = value;
@@ -2498,10 +2494,10 @@ void PopStyleVar(int count) {
     const ImNodesStyleVarInfo *var_info = GetStyleVarInfo(style_backup.Item);
     void *style_var = var_info->GetVarPtr(&GImNodes->Style);
     if (var_info->Type == ImGuiDataType_Float && var_info->Count == 1) {
-      ((float *)style_var)[0] = style_backup.FloatValue[0];
+      (reinterpret_cast<float *>(style_var))[0] = style_backup.FloatValue[0];
     } else if (var_info->Type == ImGuiDataType_Float && var_info->Count == 2) {
-      ((float *)style_var)[0] = style_backup.FloatValue[0];
-      ((float *)style_var)[1] = style_backup.FloatValue[1];
+      (reinterpret_cast<float *>(style_var))[0] = style_backup.FloatValue[0];
+      (reinterpret_cast<float *>(style_var))[1] = style_backup.FloatValue[1];
     }
     count--;
   }
@@ -2831,7 +2827,7 @@ void NodeLineHandler(ImNodesEditorContext &editor, const char *const line) {
     node.Id = id;
   } else if (sscanf(line, "origin=%i,%i", &x, &y) == 2) {
     ImNodeData &node = editor.Nodes.Pool[GImNodes->CurrentNodeIdx];
-    node.Origin = SnapOriginToGrid(ImVec2((float)x, (float)y));
+    node.Origin = SnapOriginToGrid(ImVec2(x, y));
   }
 }
 

@@ -1,7 +1,7 @@
-#include "imgui/imgui.h"
-#include "imnodes/imnodes.h"
+#include <imgui/imgui.h>
+#include <imnodes/imnodes.h>
 
-#include "node_editor.h"
+#include "./node_editor.h"
 
 namespace example {
 namespace {
